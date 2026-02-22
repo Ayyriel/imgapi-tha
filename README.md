@@ -58,7 +58,7 @@ Base URL: http://localhost:8000
 
 ```bash
 curl -X POST "http://localhost:8000/api/images" \
-  -F "file=@/path/to/photo.jpg"
+  -F "file=@./samples/validexif.jpg"
 ```
 
 Success response (example):
@@ -93,8 +93,7 @@ Success response (example):
 
 ```bash
 curl -X POST "http://localhost:8000/api/images" \
-  -F "file=@/path/to/file.xlsx"
-```
+  -F "file=@./samples/invalidimage.png"
 
 Failure response (example):
 
