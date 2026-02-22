@@ -10,44 +10,44 @@ FastAPI endpoint that accepts image uploads, stores originals on disk, stores me
 
 ---
 
-## 🧰 Installation
+# imgapi
 
-## 🔧 Environment Setup
+A lightweight image-generation API + RQ worker setup.
 
-Create `.env` locally:
+---
+
+## 🧰 Installation & Environment Setup
+
+
+This project requires a **Hugging Face access token** to download/use models.
+
+### Prerequisites
+- Docker + Docker Compose installed
+
+### 1) Create a local `.env` file
+
+From the project root:
 
 ```bash
 touch .env
 ```
+### 2) Add your Hugging Face token to .env
 
-### In `.env`
-
+Open .env and add:
 ```ini
-# Optional: improves Hugging Face download rate limits
-HF_TOKEN=
+HF_TOKEN=hf_your_token_here
 ```
 
+Get your token from your **Hugging Face account settings (Access Tokens).**
 
-### Run with Docker
+⸻
 
+### 🚀 Run with Docker
 ```bash
 git clone https://github.com/ayyriel/imgapi.git
 cd imgapi
 docker compose up --build
 ```
-
-API will be running at:  
-- http://localhost:8000
-
----
-
-Docker Compose already sets these in the container:
-
-- `DB_PATH=/srv/data/database.db`
-- `MEDIA_DIR=/srv/media`
-- `REDIS_URL=redis://redis:6379/0`
-
----
 
 ## 📋 API Endpoints
 
@@ -157,9 +157,6 @@ Example response:
   "average_processing_time_seconds": 0
 }
 ```
-
----
-
 ## 🔄 Processing Pipeline Explanation
 
 1. **Upload**: Client sends `multipart/form-data` to `POST /api/images`.
@@ -181,9 +178,6 @@ Example response:
    - `thumbnail_job` saves thumbnails under `media/thumbnails/{size}/{sha256}.jpeg`
    - `exif_job` extracts EXIF and updates `metadata.exif_json`
    - `caption_job` generates a caption (BLIP) and updates `metadata.caption`
-
----
-
 ## 🗃️ Database Schema (SQLite)
 
 Created automatically at app startup.
@@ -218,8 +212,6 @@ CREATE TABLE IF NOT EXISTS stats (
   FOREIGN KEY (image_id) REFERENCES images(image_id) ON DELETE CASCADE
 );
 ```
-
----
 
 ## 🧪 Testing
 
