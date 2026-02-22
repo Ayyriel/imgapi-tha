@@ -65,23 +65,25 @@ Success response (example):
 
 ```json
 {
-  "status": "success",
-  "data": {
-    "image_id": "img123",
-    "original_name": "photo.jpg",
-    "processed_at": "2026-02-22 12:00:00",
-    "metadata": {
-      "width": 1920,
-      "height": 1080,
-      "format": "jpeg",
-      "size_bytes": 2048576
-    }
-  },
-  "thumbnails": {
-    "small": "http://localhost:8000/api/images/img123/thumbnails/small",
-    "medium": "http://localhost:8000/api/images/img123/thumbnails/medium"
-  },
-  "error": null
+	"status": "success",
+	"data": {
+		"image_id": "ea1e40863522443fada63c5ea23154bb",
+		"original_name": "picturelol.jpg",
+		"processed_at": "2026-02-22T04:53:29.671154+00:00",
+		"metadata": {
+			"width": 1920,
+			"height": 2560,
+			"format": "jpeg",
+			"size_bytes": 496532,
+			"sha256": "b5bb50df2ae36b6f245d37734db0ea045266bd7ebbf2b4d44e99210b23ef82fa",
+			"first_upload": "2026-02-22T04:53:29.671154+00:00"
+		},
+		"thumbnails": {
+			"small": "http://localhost:8000/api/images/ea1e40863522443fada63c5ea23154bb/thumbnails/small",
+			"medium": "http://localhost:8000/api/images/ea1e40863522443fada63c5ea23154bb/thumbnails/medium"
+		}
+	},
+	"error": null
 }
 ```
 
@@ -98,15 +100,15 @@ Failure response (example):
 
 ```json
 {
-  "status": "failed",
-  "data": {
-    "image_id": "img789",
-    "original_name": "file.xlsx",
-    "processed_at": "2026-02-22 12:02:00",
-    "metadata": {},
-    "thumbnails": {}
-  },
-  "error": "invalid file format"
+	"status": "failed",
+	"data": {
+		"image_id": "806c1132278f46a0b0c10472a56a8d52",
+		"original_name": "notaphoto.png",
+		"processed_at": "2026-02-22T05:16:16.673900+00:00",
+		"metadata": {},
+		"thumbnails": {}
+	},
+	"error": "File bytes do not match image type"
 }
 ```
 
@@ -122,6 +124,43 @@ curl "http://localhost:8000/api/images"
 
 ```bash
 curl "http://localhost:8000/api/images/<IMAGE_ID>"
+```
+Sample Complete Output (EXIF + Captions)
+```json
+{
+	"status": "success",
+	"data": {
+		"image_id": "697f78df53264ae39c1bba4d01d2d73b",
+		"original_name": "exifsample.jpg",
+		"processed_at": "2026-02-22T05:17:28.616149+00:00",
+		"image_path": "/srv/media/originals/697f78df53264ae39c1bba4d01d2d73b.jpg",
+		"metadata": {
+			"width": 1200,
+			"height": 800,
+			"format": "jpeg",
+			"size_bytes": 189345,
+			"first_upload": "2026-02-22 05:17:28",
+			"exif_json": {
+				"ResolutionUnit": 2,
+				"ExifOffset": 226,
+				"Make": "FUJIFILM",
+				"Model": "X100F",
+				"Software": "Adobe Photoshop Lightroom Classic 10.0 (Macintosh)",
+				"Orientation": 1,
+				"DateTime": "2020:11:20 15:46:49",
+				"XResolution": "240.0",
+				"YResolution": "240.0"
+			},
+			"sha256": "7cd6f3b85f20d011c9ada1ef7890602e5b3833e54c8018a3ac3487fd718746e7",
+			"caption": null
+		},
+		"thumbnails": {
+			"small": "http://localhost:8000/api/images/697f78df53264ae39c1bba4d01d2d73b/thumbnails/small",
+			"medium": "http://localhost:8000/api/images/697f78df53264ae39c1bba4d01d2d73b/thumbnails/medium"
+		}
+	},
+	"error": null
+}
 ```
 
 ### Download Thumbnail
