@@ -1,4 +1,5 @@
-# imgapi — FastAPI Image Upload API
+![imgapi banner](samples/banner.png)
+# imgAPI — FastAPI Image Upload API
 FastAPI endpoint that accepts image uploads, stores originals on disk, stores metadata in SQLite, and runs background processing jobs (thumbnails, EXIF extraction, captioning) using Redis + RQ workers.
 
 ## Key Features
