@@ -94,7 +94,7 @@ Success response (example):
 ```bash
 curl -X POST "http://localhost:8000/api/images" \
   -F "file=@./samples/invalidimage.png"
-
+```
 Failure response (example):
 
 ```json
