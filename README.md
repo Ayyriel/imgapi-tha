@@ -1,29 +1,21 @@
 # imgapi — FastAPI Image Upload API
-
 FastAPI endpoint that accepts image uploads, stores originals on disk, stores metadata in SQLite, and runs background processing jobs (thumbnails, EXIF extraction, captioning) using Redis + RQ workers.
 
-## 🚀 Quick Start
+## Key Features
+- **Queue-based processing** *(Redis + RQ workers)*: Heavy tasks (thumbnailing, EXIF extraction, captioning) run in background jobs so POST /api/images stays fast and responsive.
+
+- **Multi-layer upload validation**: Files are verified by extension, MIME type, and magic-byte signature *(optionally Pillow integrity check + decompression-bomb guard)* to catch spoofed or corrupted uploads early.
+
+- **SHA256 content hashing for dedup + efficiency**: Each image is hashed (SHA256) and stored in a separate metadata table keyed by the hash, enabling a *many-images to one metadata relationship*. Duplicate uploads reuse existing metadata instead of reprocessing.
+- **Smart job triggering**: Background jobs only enqueue when a new SHA256 metadata row is created, avoiding repeated work on duplicate images.
+- **Traceability + audit-friendly:** Both successful and failed uploads are recorded, including error messages, making it easy to monitor reliability and investigate issues.
+
+## 🧰 Installation & Environment Setup
 
 ### Prerequisites
 - Python 3.11+ (project currently uses Python in Docker)
 - Docker + Docker Compose
-
----
-
-# imgapi
-
-A lightweight image-generation API + RQ worker setup.
-
----
-
-## 🧰 Installation & Environment Setup
-
-
-This project requires a **Hugging Face access token** to download/use models.
-
-### Prerequisites
-- Docker + Docker Compose installed
-
+- **Hugging Face Access Token** to download/use models.
 ### 1) Create a local `.env` file
 
 From the project root:
@@ -39,17 +31,14 @@ HF_TOKEN=hf_your_token_here
 ```
 
 Get your token from your **Hugging Face account settings (Access Tokens).**
-
-⸻
-
-### 🚀 Run with Docker
+### 3) Run with Docker!
 ```bash
 git clone https://github.com/ayyriel/imgapi.git
 cd imgapi
 docker compose up --build
 ```
 
-## 📋 API Endpoints
+## API Endpoints
 
 Base URL: http://localhost:8000
 
@@ -63,7 +52,7 @@ Base URL: http://localhost:8000
 
 ---
 
-## 📖 API Documentation + Example Usage
+## API Documentation + Example Usage
 
 ### Upload Image
 
@@ -157,7 +146,7 @@ Example response:
   "average_processing_time_seconds": 0
 }
 ```
-## 🔄 Processing Pipeline Explanation
+## Processing Pipeline Explanation
 
 1. **Upload**: Client sends `multipart/form-data` to `POST /api/images`.
 2. **Validation** (`app/utils/validator.py`):
@@ -178,7 +167,7 @@ Example response:
    - `thumbnail_job` saves thumbnails under `media/thumbnails/{size}/{sha256}.jpeg`
    - `exif_job` extracts EXIF and updates `metadata.exif_json`
    - `caption_job` generates a caption (BLIP) and updates `metadata.caption`
-## 🗃️ Database Schema (SQLite)
+## Database Schema (SQLite)
 
 Created automatically at app startup.
 
@@ -213,7 +202,7 @@ CREATE TABLE IF NOT EXISTS stats (
 );
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Run tests in Docker (recommended)
 
