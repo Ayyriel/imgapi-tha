@@ -12,6 +12,22 @@ FastAPI endpoint that accepts image uploads, stores originals on disk, stores me
 
 ## 🧰 Installation
 
+## 🔧 Environment Setup
+
+Create `.env` locally:
+
+```bash
+touch .env
+```
+
+### In `.env`
+
+```ini
+# Optional: improves Hugging Face download rate limits
+HF_TOKEN=
+```
+
+
 ### Run with Docker
 
 ```bash
@@ -24,20 +40,6 @@ API will be running at:
 - http://localhost:8000
 
 ---
-## 🔧 Environment Setup
-
-Create `.env` locally if you want to store optional values (do not commit `.env`):
-
-```bash
-cp .env.example .env
-```
-
-### Environment Variables
-
-```ini
-# Optional: improves Hugging Face download rate limits
-HF_TOKEN=
-```
 
 Docker Compose already sets these in the container:
 
