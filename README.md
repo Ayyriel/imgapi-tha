@@ -68,7 +68,7 @@ Success response (example):
 	"status": "success",
 	"data": {
 		"image_id": "ea1e40863522443fada63c5ea23154bb",
-		"original_name": "picturelol.jpg",
+		"original_name": "validexif.jpg",
 		"processed_at": "2026-02-22T04:53:29.671154+00:00",
 		"metadata": {
 			"width": 1920,
@@ -102,7 +102,7 @@ Failure response (example):
 	"status": "failed",
 	"data": {
 		"image_id": "806c1132278f46a0b0c10472a56a8d52",
-		"original_name": "notaphoto.png",
+		"original_name": "invalidimage.png",
 		"processed_at": "2026-02-22T05:16:16.673900+00:00",
 		"metadata": {},
 		"thumbnails": {}
@@ -130,7 +130,7 @@ Sample Complete Output (EXIF + Captions)
 	"status": "success",
 	"data": {
 		"image_id": "697f78df53264ae39c1bba4d01d2d73b",
-		"original_name": "exifsample.jpg",
+		"original_name": "validexif.jpg",
 		"processed_at": "2026-02-22T05:17:28.616149+00:00",
 		"image_path": "/srv/media/originals/697f78df53264ae39c1bba4d01d2d73b.jpg",
 		"metadata": {
@@ -151,7 +151,7 @@ Sample Complete Output (EXIF + Captions)
 				"YResolution": "240.0"
 			},
 			"sha256": "7cd6f3b85f20d011c9ada1ef7890602e5b3833e54c8018a3ac3487fd718746e7",
-			"caption": null
+			"caption": "a squirrel is standing on the ground"
 		},
 		"thumbnails": {
 			"small": "http://localhost:8000/api/images/697f78df53264ae39c1bba4d01d2d73b/thumbnails/small",
