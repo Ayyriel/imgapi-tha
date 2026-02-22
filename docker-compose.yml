@@ -1,0 +1,57 @@
+services:
+  redis:
+    image: redis:7-alpine
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/srv/app
+      - ./media:/srv/media
+      - ./data:/srv/data
+    environment:
+      - DB_PATH=/srv/data/database.db
+      - MEDIA_DIR=/srv/media
+      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  worker:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./app:/srv/app
+      - ./media:/srv/media
+      - ./data:/srv/data
+      - hf_cache:/root/.cache/huggingface
+    environment:
+      - DB_PATH=/srv/data/database.db
+      - MEDIA_DIR=/srv/media
+      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: python -m app.worker_boot
+
+  test:
+    build: .
+    volumes:
+      - ./app:/srv/app
+      - ./tests:/srv/tests
+      - ./media:/srv/media
+      - ./data/test.db:/srv/test.db
+    environment:
+      - DB_PATH=/srv/test.db
+      - MEDIA_DIR=/srv/media
+      - REDIS_URL=redis://redis:6379/0
+      - PYTHONPATH=/srv
+    depends_on:
+      - redis
+    command: pytest -q
+volumes:
+  hf_cache:

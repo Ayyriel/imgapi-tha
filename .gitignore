@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+
+# venv
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# pytest
+.pytest_cache/
+
+# local env
+.env
+
+media/
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# HF cache (if it ever appears locally)
+hf_cache/
+
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+media/
+data/*.db
+data/*.db-*
+*.pyc
+.DS_Store

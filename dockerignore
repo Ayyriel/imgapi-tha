@@ -1,0 +1,10 @@
+__pycache__/
+app/__pycache__/
+app/utils/__pycache__/
+tests/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+.git/
+.DS_Store
