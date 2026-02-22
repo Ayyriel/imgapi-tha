@@ -33,8 +33,8 @@ HF_TOKEN=hf_your_token_here
 Get your token from your **Hugging Face account settings (Access Tokens).**
 ### 3) Run with Docker!
 ```bash
-git clone https://github.com/ayyriel/imgapi.git
-cd imgapi
+git clone https://github.com/ayyriel/imgapi-tha.git
+cd imgapi-tha
 docker compose up --build
 ```
 
